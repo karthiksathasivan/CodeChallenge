@@ -15,7 +15,7 @@
 * Output: - the minimum amount of distance to get back to the starting point (`4` in this case)
 
 ### Instructions to install and execute the application
-#### Note: You might need latest ruby version, which can be found here https://rubyinstaller.org/downloads/
+#### Note: You might need latest ruby version(2.6.5-1), which can be found here https://rubyinstaller.org/downloads/
 * Clone the repository
 * Open Command prompt/Terminal and `cd` to the repository
 * Run  `ruby RobotTrackerApp.rb`
