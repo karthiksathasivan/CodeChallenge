@@ -6,10 +6,10 @@ LEFT = "L"
 
 =begin
 Setting the initial (x,y) coordinates of the Robot to (0,0)
-and the initial direction to 0 (facing positive y-axis)
+and the current(initial) direction to 0 (facing positive y-axis)
 =end
 x,y = 0
-direction = 0
+current_direction = 0
 
 #General instructions to users about the Robots Behaviour
 def instructions
@@ -28,20 +28,70 @@ def instructions
 end
 
 
-
-def move_robot(commands)  
+def command_handler(commands)  
     list = commands.split(",")
     list.each do |command|          
         if !(/^([#{FORWARD}#{BACKWARD}#{RIGHT}#{LEFT}])([0-9]+)$/.match?(command.upcase)) 
             puts "Invalid input format please check the instructions"
             break 
         else
-            puts command[0]   
-            puts command[1, command.length-1]        
+            direction = command[0].upcase   
+            unit = command[1, command.length-1]   
+            if /^[#{FORWARD}#{BACKWARD}]$/.match?(direction)
+                move_robot(direction, unit)  
+            else
+                rotate_robot(direction, unit) 
+            end  
         end       
     end
 end
 
+def move_robot(direction, unit)
+    if current_direction == 0
+        if /^[#{FORWARD}]$/.match?(direction)
+            y += unit
+        else
+            y -= unit
+        end
+    elsif current_direction == 1
+        if /^[#{FORWARD}]$/.match?(direction)
+            x += unit
+        else
+            x -= unit
+        end
+    elsif current_direction == 2
+        if /^[#{FORWARD}]$/.match?(direction)
+            y -= unit
+        else
+            y += unit
+        end
+    else
+        if /^[#{FORWARD}]$/.match?(direction)
+            x -= unit
+        else
+            x += unit
+        end
+    end              
+end
+
+def rotate_robot(direction, unit)
+    unit %= 4
+    if unit == 1
+        if /^[#{RIGHT}]$/.match?(direction)
+            current_direction += 1
+        else
+            current_direction += 3
+        end
+    elsif unit == 2
+        current_direction += 2
+    elsif unit == 3
+        if /^[#{RIGHT}]$/.match?(direction)
+            current_direction += 3
+        else
+            current_direction += 1
+        end
+    end
+end
 
 
 #Start point of the application
@@ -61,7 +111,7 @@ loop do
     when "i"
         instructions
     else
-        move_robot(option)
+        command_handler(option)
     end
     break if option.downcase=="x"
 end
