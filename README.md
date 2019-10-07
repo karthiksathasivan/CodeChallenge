@@ -11,6 +11,7 @@
 
 ### Sample Input and Output to test the app
 Input/Output Endpoint: - Console
+
 Inputs: - a string of comma-separated commands eg `F1,R1,B2,L1,B3`
 
 Output: - the minimum amount of distance to get back to the starting point (`4` in this case)
