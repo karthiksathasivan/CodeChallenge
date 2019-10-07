@@ -35,8 +35,7 @@ def command_handler(input)
         else
             command = instruction[0].upcase             
             unit = instruction[1, instruction.length-1].to_i
-            /[#{MOVEMENT_COMMANDS}]/.match?(command) ? move_robot(command, unit) : rotate_robot(command, (unit % 4)) 
-            puts "#{$x} #{$y} #{$current_direction}"           
+            /[#{MOVEMENT_COMMANDS}]/.match?(command) ? move_robot(command, unit) : rotate_robot(command, (unit % 4))          
         end       
     end
     puts "\n[------] Minimum distance to origin is `#{$x.abs() + $y.abs()}`[------]"
