@@ -42,8 +42,7 @@ def command_handler(commands)
                 move_robot(direction, unit)  
             else
                 rotate_robot(direction, (unit % 4)) 
-            end
-            puts "#{$x} #{$y} #{$current_direction}"             
+            end           
         end       
     end
     min_distance = $x.abs() + $y.abs()
