@@ -7,8 +7,8 @@ RIGHT = "R"
 LEFT = "L"
 
 # Defining all possible commands available for regular expression
-COMMANDS = "#{FORWARD}#{BACKWARD}#{RIGHT}#{LEFT}"
-MOVEMENT_COMMANDS = "#{FORWARD}#{BACKWARD}"
+COMMANDS = [FORWARD,BACKWARD,RIGHT,LEFT]
+MOVEMENT_COMMANDS = [FORWARD,BACKWARD]
 
 =begin
 Setting the initial (x,y) coordinates of the Robot to (0,0)
@@ -27,18 +27,22 @@ Once the functions are executed print the result
 =end
 def command_handler(input)  
     list = input.split(",")
-    list.each do |instruction|   
+    list.each do |instruction|  
         instruction = instruction.upcase.gsub(/\s+/, "")
-        if !(/^[#{COMMANDS}]([0-9]+)$/.match?(instruction)) 
+        if !(/^([a-zA-Z]+)([0-9]+)$/.match?(instruction))
             puts "\nInvalid input command. Please type `i` to refer to the instructions"
-            return 
+            return
+        end        
+        command = instruction[0..(instruction.index(/\d/)-1)].upcase
+        if COMMANDS.include? command            
+            unit = instruction[(instruction.index(/\d/))..(instruction.length-1)].to_i
+            (MOVEMENT_COMMANDS.include? command)? move_robot(command, unit) : rotate_robot(command, (unit % 4))
         else
-            command = instruction[0].upcase             
-            unit = instruction[1, instruction.length-1].to_i
-            /[#{MOVEMENT_COMMANDS}]/.match?(command) ? move_robot(command, unit) : rotate_robot(command, (unit % 4))          
-        end       
+            puts "\nInvalid input command. Please type `i` to refer to the instructions"
+            return
+        end           
     end
-    puts "\n[------] Minimum distance to origin is `#{$x.abs() + $y.abs()}`[------]"
+    puts "\n[------ Minimum distance to origin is `#{$x.abs() + $y.abs()}` ------]"
     $x = 0
     $y = 0
     $current_direction = 0
