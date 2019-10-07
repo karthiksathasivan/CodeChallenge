@@ -23,7 +23,7 @@ Output: - the minimum amount of distance to get back to the starting point (`4` 
 * Run  `ruby RobotTrackerApp.rb`
 
 ### Design Assumptions and Decisions
-* The robot's movement can be tracked on a 2 Dimensional plan using x,y-axes and current direction using integers - 0,1,2,3
+* The robot's movement can be tracked on a 2 Dimensional plane using x,y-axes and current direction(using integers - 0,1,2,3)
 * The initial displacement can be assigned to (0,0) [(x,y) coordinates]
 * The initial direction can be assigned 0(facing positive y-axis)
 * The program will only accept input in the form `<command><number>` (eg., `F,R`) will be invalidated
