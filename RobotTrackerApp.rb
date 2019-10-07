@@ -17,30 +17,30 @@ def instructions
     puts "Control the robot's behaviour with a series of `<command><number>` pair"
     puts "Use comma(,) to separate each pairs"
     puts "The robot accepts the following commands:"
-    puts "\t* `F` - move forward by 1 unit"
-    puts "\t* `B` - move backward by 1 unit"
-    puts "\t* `R` - turn right by 90 degree"
-    puts "\t* `L` - turn left by 90 degree\n"
+    puts "\t* `#{FORWARD}` - move forward by 1 unit"
+    puts "\t* `#{BACKWARD}` - move backward by 1 unit"
+    puts "\t* `#{RIGHT}` - turn right by 90 degree"
+    puts "\t* `#{LEFT}` - turn left by 90 degree\n"
     puts "The numbers specify the magnitude of the motion or rotation"
-    puts "For eg., 'L2' means turn left by 180(2 times 90) degrees"
-    puts "\t 'B3' means move backwards by 3 units"
-    puts "Sample Command: F1,R2,B2,L1,B3"
+    puts "For eg., '#{LEFT}2' means turn left by 180(2 times 90) degrees"
+    puts "\t '#{BACKWARD}3' means move backwards by 3 units"
+    puts "Sample Command: #{FORWARD}1,#{RIGHT}2,#{BACKWARD}2,#{LEFT}1,#{BACKWARD}3"
 end
 
 
 
-def handleCommands(commands)   
-    begin
-        list = commands.split(",")
-        list.each do |command|
-        end
-    puts list[0]        
-    rescue => exception
-        
+def move_robot(commands)  
+    list = commands.split(",")
+    list.each do |command|          
+        if !(/^([#{FORWARD}#{BACKWARD}#{RIGHT}#{LEFT}])([0-9]+)$/.match?(command.upcase)) 
+            puts "Invalid input format please check the instructions"
+            break 
+        else
+            puts command[0]   
+            puts command[1, command.length-1]        
+        end       
     end
 end
-
-
 
 
 
@@ -53,7 +53,7 @@ puts "------------------------------------------------------------"
 instructions
 
 loop do
-    puts "Please enter your commands to control the robot"
+    puts "Please enter your input"
     option = gets.chomp
     case option
     when "x"
@@ -61,7 +61,7 @@ loop do
     when "i"
         instructions
     else
-        handleCommands(option)
+        move_robot(option)
     end
     break if option.downcase=="x"
 end
